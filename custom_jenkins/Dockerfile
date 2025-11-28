@@ -2,12 +2,9 @@ FROM jenkins/jenkins:lts
 
 USER root
 
-# Install Docker for DinD
+# Install Docker
 RUN apt-get update && \
-    apt-get install -y \
-    docker.io \
-    curl \
-    unzip
+    apt-get install -y docker.io
 
 # Install AWS CLI for ARM64
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip" && \
