@@ -1,5 +1,5 @@
 from langchain_groq import ChatGroq
-from langchain_community.tools import TavilySearchResults
+from langchain_tavily import TavilySearch
 from langgraph.prebuilt import create_react_agent
 from langchain_core.messages import AIMessage
 from app.config.settings import settings
@@ -11,21 +11,24 @@ logger = get_logger(__name__)
 
 class AIAgent:
     def __init__(self):
-        self.groq_client = ChatGroq(api_key=settings.GROQ_API_KEY)
-        self.tavily_client = TavilySearchResults(api_key=settings.TAVILY_API_KEY)
+        self.tavily_client = TavilySearch(
+            api_key=settings.TAVILY_API_KEY, max_results=10, include_images=True
+        )
         self.model = settings.ALLOWED_MODEL_LIST[0]
-        self.tools = [TavilySearchResults()]
-        self.agent = create_react_agent(self.groq_client, self.model, self.tools)
 
     def run(self, prompt: str):
         return self.agent.invoke({"input": prompt})
 
     def get_response_from_ai_agent(
-        self, llm_model: str, allow_search: bool, user_query: str, prompt: str
+        self,
+        llm_model: str = settings.ALLOWED_MODEL_LIST[0],
+        allow_search: bool = True,
+        user_query: str = None,
+        prompt: str = None,
     ):
         try:
             if allow_search:
-                tools = [TavilySearchResults()]
+                tools = [self.tavily_client]
             else:
                 tools = []
             llm_client = ChatGroq(api_key=settings.GROQ_API_KEY, model=llm_model)
