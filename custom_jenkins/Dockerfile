@@ -1,19 +1,24 @@
 FROM jenkins/jenkins:lts
 
-# Set environment to non-interactive
-ENV DEBIAN_FRONTEND=noninteractive
-ENV TERM=xterm
-
 USER root
 
-# Install Docker client without interactive prompts
-RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends \
+# Install Docker for DinD
+RUN apt-get update && \
+    apt-get install -y \
     docker.io \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    curl \
+    unzip
 
-# Add Jenkins user to docker group
+# Install AWS CLI for ARM64
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && \
+    ./aws/install && \
+    rm -rf awscliv2.zip aws
+
+# Add jenkins user to docker group
 RUN usermod -aG docker jenkins
+
+# Start Docker daemon when container starts
+CMD ["sh", "-c", "dockerd & /usr/local/bin/jenkins.sh"]
 
 USER jenkins
