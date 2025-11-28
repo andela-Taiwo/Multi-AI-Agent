@@ -31,8 +31,9 @@ class AIAgent:
                 tools = [self.tavily_client]
             else:
                 tools = []
+
             llm_client = ChatGroq(api_key=settings.GROQ_API_KEY, model=llm_model)
-            agent = create_react_agent(llm_client, tools, state_modifier=prompt)
+            agent = create_react_agent(llm_client, tools, prompt=prompt)
             state = {"messages": user_query}
             response = agent.invoke(state)
             messages = response.get("messages")

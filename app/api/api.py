@@ -24,7 +24,7 @@ class RequestState(BaseModel):
 
 
 @app.post("/api/v1/chat")
-async def chat_endpoint(request_state: RequestState):
+def chat_endpoint(request_state: RequestState):
     try:
         if request_state.model_name not in settings.ALLOWED_MODEL_LIST:
             logger.error(f"Invalid model name: {request_state.model_name}")
@@ -32,10 +32,10 @@ async def chat_endpoint(request_state: RequestState):
         if not request_state.system_prompt:
             logger.error("System prompt is required")
             raise HTTPException(status_code=400, detail="System prompt is required")
+
         if not request_state.messages:
             logger.error("Messages are required")
             raise HTTPException(status_code=400, detail="Messages are required")
-
         response = agent_response(
             request_state.model_name,
             request_state.allow_search,
