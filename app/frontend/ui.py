@@ -25,7 +25,7 @@ if st.button("Submit") and user_query.strip():
     data = {
         "model_name": selected_model,
         "system_prompt": sytem_prompt,
-        "messages": [],
+        "messages": [user_query],
         "allow_search": allow_search,
     }
     try:

@@ -14,14 +14,7 @@ class Settings:
     GROQ_API_KEY: str = os.getenv("GROQ_API_KEY")
     TAVILY_API_KEY: str = os.getenv("TAVILY_API_KEY")
 
-    ALLOWED_MODEL_LIST: list[str] = [
-        "gpt-4o",
-        "gpt-4o-mini",
-        "gpt-4o-turbo",
-        "gpt-4o-turbo-mini",
-        "gpt-4o-turbo-mini-2025-07-16",
-        "gpt-4o-turbo-mini-2025-07-16",
-    ]
+    ALLOWED_MODEL_LIST: list[str] = ["llama-3.3-70b-versatile"]
 
 
 settings = Settings()
