@@ -18,7 +18,7 @@ docker rm jenkins-dind 2>/dev/null || true
 #   -u root \
 #   jenkins-dind
 docker run -d \
-  --name sonarqube-dind \
+  --name jenkins-dind \
   --network dind-network \
   -p 8080:8080 \
   -p 50000:50000 \
