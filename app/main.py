@@ -20,9 +20,19 @@ def start_server():
         raise CustomException(f"Error starting server: {e}")
 
 
+def start_frontend():
+    try:
+        logger.info("Starting frontend...")
+        subprocess.run(["streamlit", "run", "app/frontend/ui.py"])
+    except Exception as e:
+        logger.error(f"Error starting frontend: {e}")
+        raise CustomException(f"Error starting frontend: {e}")
+
+
 if __name__ == "__main__":
     try:
         threading.Thread(target=start_server).start()
+        time.sleep(2)
+        start_frontend()
     except Exception as e:
-        logger.error(f"Error starting server: {e}")
-        raise CustomException(f"Error starting server: {e}")
+        raise CustomException(f"Error starting the application: str{e}")
