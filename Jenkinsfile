@@ -75,8 +75,8 @@ pipeline{
                         
                         // Build and push
                         sh """
-                            docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG} .
-                            docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}
+                            docker build -t ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG} .
+                            docker push ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}
                         """
                     }
                 }
