@@ -498,7 +498,22 @@ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip
 unzip awscliv2.zip
 ./aws/install
 ```
+For Apple Silicon Chip
+```bash
+rm -rf /usr/local/aws-cli
+rm -f /usr/local/bin/aws
 
+# Download AWS CLI for ARM64 (aarch64)
+curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"
+
+# Install AWS CLI
+unzip awscliv2.zip
+./aws/install
+rm -rf awscliv2.zip aws
+
+# Verify installation
+aws --version
+```
 4. Verify the installation:
 
 ```bash
