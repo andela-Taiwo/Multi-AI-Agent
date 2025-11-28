@@ -10,3 +10,4 @@
 .env.production.local
 multi_ai_agent.egg-info/
 __pycache__
+logs/
