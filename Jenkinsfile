@@ -92,7 +92,7 @@ pipeline{
                   --cluster multi_ai_agent \
                   --service arm-agent-def-service-33qba0dk \
                   --force-new-deployment \
-                  --region ${AWS_REGION}
+                  --region us-east-1
                 """
                 }
             }
