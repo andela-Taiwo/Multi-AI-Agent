@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  jenkins:
+    image: jenkins-dind
+    container_name: jenkins-dind
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./:/workspace
+    user: root
+    networks:
+      - jenkins-network
+
+  sonarqube:
+    image: sonarqube:latest
+    container_name: sonarqube-dind
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+    networks:
+      - jenkins-network
+
+networks:
+  jenkins-network:
+
+volumes:
+  jenkins_data:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
